@@ -1224,6 +1224,11 @@ static int xpad_probe(struct usb_interface *intf, const struct usb_device_id *id
 		goto err_free_mem;
 	}
 
+	if (xpad->xtype == XTYPE_XBOX360W) {
+		/* x360w controllers and the receiver have different ids */
+		input_dev->id.product = 0x02a1;
+	}
+
 	xpad->irq_in = usb_alloc_urb(0, GFP_KERNEL);
 	if (!xpad->irq_in) {
 		error = -ENOMEM;
